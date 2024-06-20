@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { useTodoContext } from "./store/todoContext.jsx";
 
 export function TodoForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
   const [completed, setCompleted] = useState(false);
+  const { addTodo } = useTodoContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!newItem) return;
 
-    onSubmit(newItem, completed);
+    addTodo(newItem, completed);
 
     setNewItem("");
     setCompleted(false);

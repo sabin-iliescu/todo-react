@@ -1,6 +1,8 @@
 import { TodoItem } from "./todoItem";
+import { useTodoContext } from "./store/todoContext.jsx";
 
-export function TodoList({ todos, toggleTodo, deleteTodo }) {
+export function TodoList() {
+  const { todos } = useTodoContext();
   return (
     <div className="card">
       <div className="card-header">Todo List</div>
@@ -9,14 +11,7 @@ export function TodoList({ todos, toggleTodo, deleteTodo }) {
           <h6 className="text-center m-3">No todos available</h6>
         )}
         {todos.map((todo) => {
-          return (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              toggleTodo={toggleTodo}
-              deleteTodo={deleteTodo}
-            />
-          );
+          return <TodoItem key={todo.id} todo={todo} />;
         })}
       </ul>
     </div>

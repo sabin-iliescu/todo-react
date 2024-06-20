@@ -1,9 +1,10 @@
-export function TodoItem({ todo, toggleTodo, deleteTodo }) {
+import { useTodoContext } from "./store/todoContext.jsx";
+
+export function TodoItem({ todo }) {
+  const { toggleTodo, deleteTodo } = useTodoContext();
+
   return (
-    <li
-      key={todo.id}
-      className="list-group-item d-flex justify-content-between align-items-center"
-    >
+    <li className="list-group-item d-flex justify-content-between align-items-center">
       <div className="form-check">
         <input
           type="checkbox"
