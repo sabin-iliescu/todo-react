@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTodoContext } from "./store/todoContext.jsx";
 
 export function TodoItem({ todo }) {
   const { dispatch, ACTIONS } = useTodoContext();
-
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(todo.name);
+  const editInputRef = useRef(null);
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
     setEditedName(todo.name);
   };
+
+  useEffect(() => {
+    // Use useEffect to focus when editing
+    if (isEditing) {
+      editInputRef.current.focus();
+    }
+  }, [isEditing]);
 
   const handleNameChange = (e) => {
     setEditedName(e.target.value);
@@ -44,6 +51,7 @@ export function TodoItem({ todo }) {
             onSubmit={handleSubmit}
           >
             <input
+              ref={editInputRef}
               className="form-control"
               type="text"
               value={editedName}
