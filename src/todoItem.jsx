@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useTodoContext } from "./store/todoContext.jsx";
 
 export function TodoItem({ todo }) {
@@ -7,10 +7,10 @@ export function TodoItem({ todo }) {
   const [editedName, setEditedName] = useState(todo.name);
   const editInputRef = useRef(null);
 
-  const toggleEdit = () => {
+  const toggleEdit = useCallback(() => {
     setIsEditing(!isEditing);
     setEditedName(todo.name);
-  };
+  }, [isEditing, todo.name]);
 
   useEffect(() => {
     // Use useEffect to focus when editing
@@ -23,17 +23,20 @@ export function TodoItem({ todo }) {
     setEditedName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!editedName) return;
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!editedName) return;
 
-    dispatch({
-      type: ACTIONS.EDIT_TODO,
-      payload: { id: todo.id, name: editedName },
-    });
-    toggleEdit();
-    setEditedName("");
-  };
+      dispatch({
+        type: ACTIONS.EDIT_TODO,
+        payload: { id: todo.id, name: editedName },
+      });
+      toggleEdit();
+      setEditedName("");
+    },
+    [dispatch, ACTIONS.EDIT_TODO, editedName, todo.id, toggleEdit]
+  );
 
   return (
     <>
