@@ -4,21 +4,24 @@ import { useTodoContext } from "./store/todoContext.jsx";
 export function TodoForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
   const [completed, setCompleted] = useState(false);
-  const { addTodo } = useTodoContext();
+  const { dispatch, ACTIONS } = useTodoContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!newItem) return;
 
-    addTodo(newItem, completed);
+    dispatch({
+      type: ACTIONS.NEW_TODO,
+      payload: { name: newItem, completed },
+    });
 
     setNewItem("");
     setCompleted(false);
   };
 
   return (
-    <div className="card p-3">
+    <div className="card p-2">
       <div className="card-header">
         <h1>Todo App</h1>
       </div>
@@ -53,7 +56,7 @@ export function TodoForm({ onSubmit }) {
             Todo completed
           </label>
         </div>
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="btn btn-primary mt-3 w-100">
           Create Todo
         </button>
       </form>

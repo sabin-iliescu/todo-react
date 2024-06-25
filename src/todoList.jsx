@@ -6,7 +6,7 @@ export function TodoList() {
   return (
     <div className="card">
       <div className="card-header">Todo List</div>
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush ps-2 pe-2 pt-2">
         {todos.length === 0 && (
           <h6 className="text-center m-3">No todos available</h6>
         )}
