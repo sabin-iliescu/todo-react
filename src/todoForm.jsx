@@ -5,6 +5,7 @@ export function TodoForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
   const [completed, setCompleted] = useState(false);
   const { dispatch, ACTIONS } = useTodoContext();
+  const [priority, setPriority] = useState("high");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,11 +14,12 @@ export function TodoForm({ onSubmit }) {
 
     dispatch({
       type: ACTIONS.NEW_TODO,
-      payload: { name: newItem, completed },
+      payload: { name: newItem, completed, priority },
     });
 
     setNewItem("");
     setCompleted(false);
+    setPriority("high");
   };
 
   return (
@@ -38,8 +40,23 @@ export function TodoForm({ onSubmit }) {
             aria-describedby="todoHelp"
             placeholder="Enter todo name"
           />
-          <small id="todoHelp" className="form-text text-muted">
-            please create a todo using the input field
+          <small className="form-text text-muted">
+            please enter a todo name
+          </small>
+        </div>
+        <div className="form-group mt-3">
+          <select
+            className="form-select"
+            onChange={(e) => {
+              setPriority(e.target.value);
+            }}
+          >
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <small className="form-text text-muted">
+            please choose a priority
           </small>
         </div>
         <div className="form-check mt-3">

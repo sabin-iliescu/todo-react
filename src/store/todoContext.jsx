@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useReducer,
-} from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const ACTIONS = {
   NEW_TODO: "newTodo",
@@ -22,7 +16,14 @@ export const TodoContext = createContext({
 function todoReducer(todos, action) {
   switch (action.type) {
     case ACTIONS.NEW_TODO:
-      return [...todos, addTodo(action.payload.name, action.payload.completed)];
+      return [
+        ...todos,
+        addTodo(
+          action.payload.name,
+          action.payload.completed,
+          action.payload.priority
+        ),
+      ];
     case ACTIONS.TOGGLE_TODO:
       return todos.map((todo) =>
         todo.id === action.payload.id
@@ -37,6 +38,7 @@ function todoReducer(todos, action) {
           ? {
               ...todo,
               name: action.payload.name,
+              priority: action.payload.priority,
             }
           : todo
       );
@@ -45,8 +47,8 @@ function todoReducer(todos, action) {
   }
 }
 
-function addTodo(name, completed) {
-  return { id: Date.now(), name, completed };
+function addTodo(name, completed, priority) {
+  return { id: Date.now(), name, completed, priority };
 }
 
 export function useTodoContext() {
@@ -58,48 +60,6 @@ function useTodos(initialTodos) {
 
   return { todos, dispatch, ACTIONS };
 }
-
-// function useTodos() {
-//   const [todos, setTodos] = useState(
-//     () => JSON.parse(localStorage.getItem("TODOS")) || []
-//   );
-
-//   function addTodo(name, completed) {
-//     setTodos((currentTodos) => {
-//       return [...currentTodos, { id: Date.now(), name, completed }];
-//     });
-//   }
-
-//   function editTodo(id, name) {
-//     setTodos((currentTodos) => {
-//       return currentTodos.map((todo) => {
-//         if (todo.id === id) {
-//           return { ...todo, name };
-//         }
-//         return todo;
-//       });
-//     });
-//   }
-
-//   const toggleTodo = (id, completed) => {
-//     setTodos((currentTodos) => {
-//       return currentTodos.map((todo) => {
-//         if (todo.id === id) {
-//           return { ...todo, completed };
-//         }
-//         return todo;
-//       });
-//     });
-//   };
-
-//   const deleteTodo = (id) => {
-//     setTodos((currentTodos) => {
-//       return currentTodos.filter((todo) => todo.id !== id);
-//     });
-//   };
-
-//   return { todos, deleteTodo, toggleTodo, addTodo, editTodo };
-// }
 
 export function TodoProvider({ children }) {
   const { todos, dispatch } = useTodos(

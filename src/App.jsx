@@ -8,10 +8,10 @@ function App() {
     <>
       <div className="container mt-5">
         <div className="row">
-          <div className="col col-lg-5">
+          <div className="col col-lg-4 col-sm-12">
             <TodoForm />
           </div>
-          <div className="col col-lg-7">
+          <div className="col col-lg-8 col-sm-12">
             <TodoList />
           </div>
         </div>
