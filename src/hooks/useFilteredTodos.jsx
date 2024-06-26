@@ -7,15 +7,26 @@ export function useFilteredTodos() {
   const [filteredTodos, setFilteredTodos] = useState([]);
 
   useEffect(() => {
+    const priorityMap = {
+      high: 1,
+      medium: 2,
+      low: 3,
+    };
+
+    let sortedTodos = [...todos].sort((a, b) => {
+      console.log(a.priority, b.priority);
+      return priorityMap[a.priority] - priorityMap[b.priority];
+    });
+
     switch (filter) {
       case "completed":
-        setFilteredTodos(todos.filter((todo) => todo.completed));
+        setFilteredTodos(sortedTodos.filter((todo) => todo.completed));
         break;
       case "active":
-        setFilteredTodos(todos.filter((todo) => !todo.completed));
+        setFilteredTodos(sortedTodos.filter((todo) => !todo.completed));
         break;
       default:
-        setFilteredTodos(todos);
+        setFilteredTodos(sortedTodos);
     }
   }, [todos, filter]);
 
