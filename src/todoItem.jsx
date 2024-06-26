@@ -13,7 +13,6 @@ export function TodoItem({ todo }) {
   }, [isEditing, todo.name]);
 
   useEffect(() => {
-    // Use useEffect to focus when editing
     if (isEditing) {
       editInputRef.current.focus();
     }

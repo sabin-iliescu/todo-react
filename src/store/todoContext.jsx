@@ -15,10 +15,6 @@ const ACTIONS = {
 
 export const TodoContext = createContext({
   todos: [],
-  addTodo: () => {},
-  toggleTodo: () => {},
-  deleteTodo: () => {},
-  editTodo: () => {},
   dispatch: () => {},
   ACTIONS: {},
 });
