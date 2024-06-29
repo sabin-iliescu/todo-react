@@ -14,7 +14,6 @@ export function useFilteredTodos() {
     };
 
     let sortedTodos = [...todos].sort((a, b) => {
-      console.log(a.priority, b.priority);
       return priorityMap[a.priority] - priorityMap[b.priority];
     });
 

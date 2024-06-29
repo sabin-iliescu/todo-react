@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useTodoContext } from "./store/todoContext.jsx";
+import PrioritySelect from "./prioritySelect.jsx";
 
 export function TodoForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const { dispatch, ACTIONS } = useTodoContext();
   const [priority, setPriority] = useState("high");
@@ -14,7 +16,7 @@ export function TodoForm({ onSubmit }) {
 
     dispatch({
       type: ACTIONS.NEW_TODO,
-      payload: { name: newItem, completed, priority },
+      payload: { name: newItem, completed, priority, dueDate },
     });
 
     setNewItem("");
@@ -40,24 +42,25 @@ export function TodoForm({ onSubmit }) {
             aria-describedby="todoHelp"
             placeholder="Enter todo name"
           />
-          <small className="form-text text-muted">
-            please enter a todo name
-          </small>
         </div>
-        <div className="form-group mt-3">
-          <select
-            className="form-select"
-            onChange={(e) => {
-              setPriority(e.target.value);
-            }}
-          >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-          <small className="form-text text-muted">
-            please choose a priority
-          </small>
+        <div className="container">
+          <div className="row">
+            <div className="form-group col-sm-6 mt-3">
+              <PrioritySelect priority={priority} setPriority={setPriority} />
+              <small className="form-text text-muted">priority</small>
+            </div>
+            <div className="form-group col-sm-6 mt-3">
+              <input
+                type="date"
+                className="form-control"
+                value={dueDate}
+                onChange={(e) => {
+                  setDueDate(e.target.value);
+                }}
+              />
+              <small className="form-text text-muted">due date</small>
+            </div>
+          </div>
         </div>
         <div className="form-check mt-3">
           <input

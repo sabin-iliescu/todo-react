@@ -6,6 +6,7 @@ export function TodoItem({ todo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(todo.name);
   const [editedPriority, setEditedProirity] = useState(todo.priority);
+  const [editedDueDate, setEditedDueDate] = useState(todo.dueDate);
   const editInputRef = useRef(null);
 
   const toggleEdit = useCallback(() => {
@@ -28,6 +29,10 @@ export function TodoItem({ todo }) {
     setEditedProirity(e.target.value);
   };
 
+  const handleDueDateChange = (e) => {
+    setEditedDueDate(e.target.value);
+  };
+
   const todoPriorityClass = useCallback(() => {
     if (todo.priority === "high") {
       return "badge rounded-pill bg-danger p-2";
@@ -45,11 +50,17 @@ export function TodoItem({ todo }) {
 
       dispatch({
         type: ACTIONS.EDIT_TODO,
-        payload: { id: todo.id, name: editedName, priority: editedPriority },
+        payload: {
+          id: todo.id,
+          name: editedName,
+          priority: editedPriority,
+          dueDate: editedDueDate,
+        },
       });
       toggleEdit();
       setEditedName("");
       setEditedProirity(todo.priority);
+      setEditedDueDate(todo.dueDate);
     },
     [
       dispatch,
@@ -58,6 +69,7 @@ export function TodoItem({ todo }) {
       todo.id,
       toggleEdit,
       editedPriority,
+      editedDueDate,
     ]
   );
 
@@ -82,6 +94,12 @@ export function TodoItem({ todo }) {
               type="text"
               value={editedName}
               onChange={handleNameChange}
+            />
+            <input
+              className="form-control me-2 w-50"
+              type="date"
+              value={editedDueDate}
+              onChange={handleDueDateChange}
             />
             <select
               className="form-select w-50 me-3"
@@ -112,6 +130,7 @@ export function TodoItem({ todo }) {
                   }}
                 />
               </div>
+              <span className="me-2">Due: {todo.dueDate}</span>
               <span className={todoPriorityClass()}>{todo.priority}</span>
             </div>
             <span

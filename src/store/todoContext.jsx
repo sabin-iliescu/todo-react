@@ -21,7 +21,8 @@ function todoReducer(todos, action) {
         addTodo(
           action.payload.name,
           action.payload.completed,
-          action.payload.priority
+          action.payload.priority,
+          action.payload.dueDate
         ),
       ];
     case ACTIONS.TOGGLE_TODO:
@@ -39,6 +40,7 @@ function todoReducer(todos, action) {
               ...todo,
               name: action.payload.name,
               priority: action.payload.priority,
+              dueDate: action.payload.dueDate,
             }
           : todo
       );
@@ -47,8 +49,8 @@ function todoReducer(todos, action) {
   }
 }
 
-function addTodo(name, completed, priority) {
-  return { id: Date.now(), name, completed, priority };
+function addTodo(name, completed, priority, dueDate) {
+  return { id: Date.now(), name, completed, priority, dueDate };
 }
 
 export function useTodoContext() {
