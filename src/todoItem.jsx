@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTodoContext } from "./store/todoContext.jsx";
+import PrioritySelect from "./prioritySelect.jsx";
 
 export function TodoItem({ todo }) {
   const { dispatch, ACTIONS } = useTodoContext();
@@ -101,15 +102,11 @@ export function TodoItem({ todo }) {
               value={editedDueDate}
               onChange={handleDueDateChange}
             />
-            <select
-              className="form-select w-50 me-3"
-              value={editedPriority}
-              onChange={handlePriorityChange}
-            >
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
+            <PrioritySelect
+              priority={editedPriority}
+              setPriority={handlePriorityChange}
+              isItem={true}
+            />
             <button className="btn btn-info ms-3" type="submit">
               Save
             </button>

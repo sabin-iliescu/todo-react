@@ -46,7 +46,11 @@ export function TodoForm({ onSubmit }) {
         <div className="container">
           <div className="row">
             <div className="form-group col-sm-6 mt-3">
-              <PrioritySelect priority={priority} setPriority={setPriority} />
+              <PrioritySelect
+                priority={priority}
+                setPriority={setPriority}
+                isItem={false}
+              />
               <small className="form-text text-muted">priority</small>
             </div>
             <div className="form-group col-sm-6 mt-3">

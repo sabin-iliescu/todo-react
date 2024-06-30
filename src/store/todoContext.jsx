@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  Suspense,
+} from "react";
 
 const ACTIONS = {
   NEW_TODO: "newTodo",
@@ -74,7 +80,7 @@ export function TodoProvider({ children }) {
 
   return (
     <TodoContext.Provider value={{ todos, dispatch, ACTIONS }}>
-      {children}
+      <Suspense fallback={<div>Loading todos...</div>}>{children}</Suspense>
     </TodoContext.Provider>
   );
 }
